@@ -11,6 +11,7 @@ RUN echo "root:root" | chpasswd
 RUN echo "$USERNAME:$USERNAME" | chpasswd
 RUN usermod -d /home/$USERNAME -m $USERNAME
 RUN usermod -aG sudo user 
+
 WORKDIR /home/${USERNAME}/project
 
 # # # install some utilities
@@ -29,11 +30,11 @@ RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz; \
     rm -r /install-tl-unx; \
 	rm install-tl-unx.tar.gz
 
+
 ENV PATH="/usr/local/texlive/2022/bin/x86_64-linux:${PATH}"
 RUN tlmgr install latexmk
 RUN tlmgr install collection-langjapanese collection-langcjk xcomment
 RUN git config --global --add safe.directory /home/${USERNAME}/project
-USER $USERNAME
 
 
 # FROM ubuntu:22.04
